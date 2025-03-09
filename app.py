@@ -27,7 +27,8 @@ conn = mysql.connector.connect(
     host="d8.aurorix.net",
     port=3306,
     user="u83995_YdB7znKWMQ",
-    password="1c+DtC^gcTyo.vUtUKCy+gL6")
+    password="1c+DtC^gcTyo.vUtUKCy+gL6",
+    database="s83995_ghjfghj")
 cursor = conn.cursor()
 cursor.execute("""CREATE TABLE IF NOT EXISTS payments (
     token STRING,
