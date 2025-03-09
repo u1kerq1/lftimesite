@@ -4,7 +4,7 @@ import threading
 import cv2,random,string
 import nicepay
 import requests
-
+import mysql.connector
 def get_static_rates():
     # Статические курсы валют относительно RUB
     return {
@@ -23,7 +23,11 @@ def convert_currency(amount, from_currency, to_currency):
         raise Exception(f"Валюта {to_currency} не найдена")
 
 app = Flask(__name__)
-conn = sqlite3.connect("payments.db",check_same_thread=False)
+conn = mysql.connector.connect(
+    host="d8.aurorix.net",
+    port=3306,
+    user="u83995_YdB7znKWMQ",
+    password="1c+DtC^gcTyo.vUtUKCy+gL6")
 cursor = conn.cursor()
 cursor.execute("""CREATE TABLE IF NOT EXISTS payments (
     token STRING,
@@ -62,14 +66,14 @@ def pay():
         except ValueError as exx:
             print({"ok":False,"message":exx.args[0]})
             return {"ok":False,"message":exx.args[0]}
-        cursor.execute("INSERT INTO payments (token, price, cmd) VALUES (?, ?, ?)", (token, ar['price'],ar['cmd'].replace("%player%",ar['nickname'])))
+        cursor.execute("INSERT INTO payments (token, price, cmd) VALUES (%s, %s, %s)", (token, ar['price'],ar['cmd'].replace("%player%",ar['nickname'])))
         conn.commit()
         return {"ok":True, "url":api}
 from mcrcon import MCRcon
 @app.route("/success_payment")
 def success():
     token = request.args['token']
-    cursor.execute("SELECT cmd FROM payments WHERE token=?", (token,))
+    cursor.execute("SELECT cmd FROM payments WHERE token=%s", (token,))
     cmd = cursor.fetchone()
     if cmd == None:
         return redirect(url_for("index"))
