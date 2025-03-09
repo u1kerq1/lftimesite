@@ -31,9 +31,9 @@ conn = mysql.connector.connect(
     database="s83995_ghjfghj")
 cursor = conn.cursor()
 cursor.execute("""CREATE TABLE IF NOT EXISTS payments (
-    token STRING,
-    price INTEGER,
-    cmd STRING
+    token TEXT,
+    price INT,
+    cmd TEXT
 )""")
 conn.commit()
 def gh(v):
