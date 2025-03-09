@@ -2,3 +2,4 @@ mcrcon
 flask
 opencv-python
 requests
+mysql-connector-python
