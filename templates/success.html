@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LFTIME</title>
+    <style>
+        body {
+            background-color: #080808;
+            text-align: center;
+            color: #c5b4b4;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        img {
+            border-color: #4c3f68;
+            border-radius: 15px;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(14, 14, 14, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+            font-variant-caps: all-petite-caps;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav ul li a {
+            font-weight: 500;
+            transition: opacity 0.3s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        nav ul li a:hover {
+            opacity: 0.7;
+        }
+
+        .main {
+            display: flex;
+            padding-top: 150px;
+            white-space: pre-line;
+        }
+        .title {
+            padding-left: 15%;
+            justify-content: left;
+            align-items: left;
+            text-align: left;
+            gap: 15px;
+        }
+        .main h2 {
+            margin: 0;
+            font-size: 3rem;
+            font-variant-caps: all-petite-caps;
+            font-weight: bold;
+            text-align: left;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+            color: #fff;
+            white-space: pre-line;
+            animation: fadeIn 1s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        .main h3 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-variant-caps: all-petite-caps;
+            font-weight: bold;
+            text-align: left;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+            color: #a3a3a3;
+            white-space: pre-line;
+            animation: fadeIn 2s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(200px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Стили для товаров */
+        .products {
+            display: flex;
+            justify-content: left;
+            gap: 20px;
+            padding-left: 15%;
+            flex-wrap: wrap;
+        }
+
+        .product-card {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 1rem;
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 2s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-card h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .product-card p {
+            margin: 0.5rem 0;
+            color: #a3a3a3;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .modal-content {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 2rem;
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .payment-methods img {
+            width: 100px;
+            height: auto;
+        }
+
+        .nickname-input {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nickname-input label {
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .nickname-input input {
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid #4c3f68;
+            background-color: #080808;
+            color: #fff;
+        }
+
+        .pay-button {
+            background-color: #4c3f68;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+
+        .pay-button:hover {
+            background-color: #5a4a7a;
+        }
+
+        /* Уведомления */
+        .notifications {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1002;
+        }
+
+        .notification {
+            background-color: #1a1a1a;
+            border-radius: 5px;
+            padding: 1rem;
+            color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+
+        .notification.success {
+            border-left: 5px solid #4CAF50;
+        }
+
+        .notification.error {
+            border-left: 5px solid #F44336;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>LFTIME</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="/rules">Правила</a></li>
+                    <li><a href="#donate">Услуги</a></li>
+                    <li><a href="/news">Новости</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <div class="main">
+        <div class="title">
+            <h2>Успешная оплата</h2>
+            <h3>Товар оплачен. Привелегия выдана.</h3>
+        </div>
+    </div>
+    
+
+    <!-- Модальное окно -->
+    
+
+    <!-- Уведомления -->
+    <div class="notifications" id="notifications"></div>
+
+    <script>
+        let currentProduct = null;
+
+        function openModal(productName, price, cmd) {
+            currentProduct = { productName, price, cmd };
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function showNotification(message, type) {
+            const notifications = document.getElementById('notifications');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notifications.appendChild(notification);
+
+            // Удаление уведомления через 5 секунд
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+        }
+
+        function pay() {
+            const nickname = document.getElementById('nickname').value;
+            if (!nickname) {
+                showNotification('Пожалуйста, введите ваш никнейм.', 'error');
+                return;
+            }
+            const currency = document.getElementById('currency').value;
+            if (!currency) {
+                currency = "RUB";
+            }
+
+            const data = {
+                method: "crypto_bot",
+                nickname: nickname,
+                price: currentProduct.price,
+                cmd: currentProduct.cmd,
+                currency: currency
+            };
+
+            fetch('/pay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                showNotification('Сейчас перенаправлю вас...', 'success');
+                closeModal();
+                window.location.href = data.url
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                showNotification('Произошла ошибка при оплате.', 'error');
+            });
+        }
+
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
