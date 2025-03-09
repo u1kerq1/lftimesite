@@ -1,0 +1,4 @@
+mcrcon
+flask
+opencv-python
+requests
