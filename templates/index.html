@@ -154,6 +154,7 @@
             margin: 0;
             font-size: 1.2rem;
             color: #fff;
+            font-variant-caps: all-petite-caps;
         }
 
         .product-card p {
@@ -306,6 +307,18 @@
 
     <!-- Секция с товарами -->
     <div class="products" name="donate">
+        <div class="product-card" onclick="openModal('Токены x5000', 25, 'p give %player% 5000')">
+            <h4>Токены x5000</h4>
+            <p>Цена: 25 руб.</p>
+        </div>
+        <div class="product-card" onclick="openModal('Токены x15000', 25, 'p give %player% 15000')">
+            <h4>Токены x15000</h4>
+            <p>Цена: 75 руб.</p>
+        </div>
+        <div class="product-card" onclick="openModal('Токены x30000', 150, 'p give %player% 30000')">
+            <h4>Токены x30000</h4>
+            <p>Цена: 150 руб.</p>
+        </div>
         <div class="product-card" onclick="openModal('Глава [30д.]', 119, 'lp user %player% parent addtemp glava 30d')">
             <h4>Глава [30д.]</h4>
             <p>Цена: 119 руб.</p>
